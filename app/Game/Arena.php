@@ -1,29 +1,26 @@
 <?php declare(strict_types=1);
 
-
 namespace Hero\Game;
-
-use Generator;
-use Hero\Game\Warrior;
 
 class Arena
 {
+	private PlayerSorter $playerOrderRules;
 
 	/**
 	 * Arena constructor.
+	 * @param PlayerSorter $playerOrderRules
 	 */
-	public function __construct()
+	public function __construct(PlayerSorter $playerOrderRules)
 	{
+		$this->playerOrderRules = $playerOrderRules;
 	}
 
-	/**
-	 * @return Generator
-	 *
-	 * @param Warrior $player1
-	 * @param Warrior $player2
-	 */
-	public function rounds(Warrior $player1, Warrior $player2): Generator
+	public function fight(Warrior $player1, Warrior $player2)
 	{
-		yield 1;
+		list($firstPlayer, $secondPlayer) = $this->playerOrderRules->sort($player1, $player2);
+
+
+
+		//$this->fightFactory->newFight
 	}
 }

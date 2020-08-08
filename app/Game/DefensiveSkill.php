@@ -7,4 +7,5 @@ namespace Hero\Game;
 interface DefensiveSkill
 {
 
+	public function use(WarriorStats $warriorStats, int $attack): WarriorStats;
 }

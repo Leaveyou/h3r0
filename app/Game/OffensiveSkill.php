@@ -6,5 +6,5 @@ namespace Hero\Game;
 
 interface OffensiveSkill
 {
-	//
+	public function use(Defender $target, int $strength);
 }

@@ -1,30 +1,32 @@
 <?php declare(strict_types=1);
 
-
 namespace Hero\Game;
 
 use Generator;
 
 class Fight
 {
-	private Warrior $firstPlayer;
-	private Warrior $secondPlayer;
+	private Warrior $firstWarrior;
+	private Warrior $secondWarrior;
 
 	/**
-	 * @param Warrior $firstPlayer
-	 * @param Warrior $secondPlayer
+	 * @param Warrior $firstWarrior
+	 * @param Warrior $secondWarrior
 	 */
-	public function __construct(Warrior $firstPlayer, Warrior $secondPlayer)
+	public function __construct(Warrior $firstWarrior, Warrior $secondWarrior)
 	{
-		$this->firstPlayer = $firstPlayer;
-		$this->secondPlayer = $secondPlayer;
+		$this->firstWarrior = $firstWarrior;
+		$this->secondWarrior = $secondWarrior;
 	}
 
 	/**
-	 * @return Generator
+	 * @return Generator|bool[]
 	 */
 	public function rounds(): Generator
 	{
-		yield 1;
+		for( $round = 1; $round <= 20; $round++) {
+			yield $this->firstWarrior->attack($this->secondWarrior);
+			yield $this->secondWarrior->attack($this->firstWarrior);
+		}
 	}
 }

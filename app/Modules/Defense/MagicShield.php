@@ -5,6 +5,7 @@ namespace Hero\Modules\Defense;
 
 
 use Hero\Game\DefensiveSkill;
+use Hero\Game\WarriorStats;
 
 class MagicShield implements DefensiveSkill
 {
@@ -14,5 +15,10 @@ class MagicShield implements DefensiveSkill
 	 */
 	public function __construct()
 	{
+	}
+
+	public function use(WarriorStats $warriorStats, int $attack): WarriorStats
+	{
+		return $warriorStats;
 	}
 }

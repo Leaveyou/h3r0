@@ -5,11 +5,11 @@ namespace Hero\Modules\Offense;
 use Hero\Game\Defender;
 use Hero\Game\OffensiveSkill;
 
-class RapidStrike implements OffensiveSkill
+class DefaultStrike implements OffensiveSkill
 {
 	public function use(Defender $target, int $strength)
 	{
 		$target->defend($strength);
-		$target->defend($strength);
+
 	}
 }

@@ -4,23 +4,40 @@ namespace Hero\Game;
 
 class Arena
 {
-	private PlayerSorter $playerOrderRules;
+	private WarriorSorter $warriorOrderRules;
+	/**
+	 * @var FightFactory
+	 */
+	private FightFactory $fightFactory;
 
 	/**
 	 * Arena constructor.
-	 * @param PlayerSorter $playerOrderRules
+	 * @param WarriorSorter $warriorOrderRules
+	 * @param FightFactory $fightFactory
 	 */
-	public function __construct(PlayerSorter $playerOrderRules)
+	public function __construct(WarriorSorter $warriorOrderRules, FightFactory $fightFactory)
 	{
-		$this->playerOrderRules = $playerOrderRules;
+		$this->warriorOrderRules = $warriorOrderRules;
+		$this->fightFactory = $fightFactory;
 	}
 
-	public function fight(Warrior $player1, Warrior $player2)
+	public function fight(Warrior $warriorA, Warrior $warriorB)
 	{
-		list($firstPlayer, $secondPlayer) = $this->playerOrderRules->sort($player1, $player2);
+		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
 
+		// todo: determine of this should be here. Smells temporal coupling
+		//$this->armWarriors($firstWarrior, $secondWarrior);
 
+		$fight = $this->fightFactory->newFight($firstWarrior, $secondWarrior);
 
-		//$this->fightFactory->newFight
+		foreach ($fight->rounds() as $round) {
+			echo $round;
+		}
 	}
+
+//	private function armWarriors(Warrior $firstWarrior, Warrior $secondWarrior)
+//	{
+//		$firstWarrior->setTarget($secondWarrior);
+//		$secondWarrior->setTarget($firstWarrior);
+//	}
 }

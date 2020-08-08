@@ -1,5 +1,6 @@
 <?php declare(strict_types = 1);
 
+use Hero\Game\Arena;
 use Hero\Game\FightFactory;
 use Hero\Game\WarriorSorter;
 use Hero\Game\Warrior;
@@ -29,7 +30,7 @@ $warriorSorter = new WarriorSorter();
 $warriorSorter->registerFunction(new SpeedSorter());
 $warriorSorter->registerFunction(new LuckSorter());
 
-$arena = new Hero\Game\Arena($warriorSorter, new FightFactory());
+$arena = new Arena($warriorSorter, new FightFactory());
 
 $arena->fight($orderus, $balaurus);
 

@@ -27,7 +27,7 @@ class Arena
 	{
 		// todo: register listeners for events
 		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
-		$fight = $this->fightFactory->newFight($firstWarrior, $secondWarrior);
+		$fight = $this->fightFactory->newFight($warriorA, $warriorB);
 		foreach ($fight->getAttacks() as $attack) {
 			$attacker = $attack->getAttacker();
 			$defender = $attack->getDefender();

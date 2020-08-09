@@ -5,7 +5,7 @@ namespace Hero\Modules\Defense;
 use Hero\Game\DefensiveSkill;
 use Hero\Game\WarriorStats;
 use Hero\Tools\Chance;
-use Hero\Tools\ConsoleColors;
+use Hero\Tools\ConsoleColors as Color;
 
 class DefaultDefense implements DefensiveSkill
 {
@@ -40,7 +40,7 @@ class DefaultDefense implements DefensiveSkill
 			$warriorStats->getHealth()
 		);
 
-		echo "{$warriorStats->getName()} gets hit for " . ConsoleColors::red((string)$damage) . " damage." . PHP_EOL;
+		echo "{$warriorStats->getName()} gets hit for " . Color::red((string)$damage) . " damage." . PHP_EOL;
 
 		return $damage;
 	}

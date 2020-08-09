@@ -5,8 +5,6 @@ namespace Hero\Tools;
 
 class ConsoleColors
 {
-	private string $text;
-
 	public static function red(string $text) : string
 	{
 		return "\033[31m" . $text . "\033[39m";

@@ -8,21 +8,28 @@ class WarriorOffensiveSkill
 {
 	private OffensiveSkill $offensiveSkill;
 	private Chance $chance;
-	private WarriorStats $stats;
+	private WarriorStats $warriorStats;
 
-	public function __construct(OffensiveSkill $offensiveSkill, WarriorStats $stats, Chance $chance)
+	public function __construct(OffensiveSkill $offensiveSkill, WarriorStats $warriorStats, Chance $chance)
 	{
 		$this->offensiveSkill = $offensiveSkill;
 		$this->chance = $chance;
-		$this->stats = $stats;
+		$this->warriorStats = $warriorStats;
 	}
 
-	public function try(Defender $target): bool
+	public function try(Defender $target): ?bool
 	{
 		if (!$this->chance->roll()) {
-			return false;
+			return null;
 		}
-		$this->offensiveSkill->use($target, $this->stats->getStrength());
-		return true;
+		return $this->offensiveSkill->use($target, $this->warriorStats);
 	}
+
+	public function getName()
+	{
+		// todo: I don't like this
+		return $this->offensiveSkill->getName();
+	}
+
+
 }

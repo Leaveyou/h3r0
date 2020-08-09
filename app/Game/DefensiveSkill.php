@@ -6,6 +6,6 @@ namespace Hero\Game;
 
 interface DefensiveSkill
 {
-
-	public function use(WarriorStats $warriorStats, int $attack): WarriorStats;
+	// todo: simplify skills. No wrapper. Chance goes directly inside skill
+	public function use(WarriorStats $warriorStats, int $attack);
 }

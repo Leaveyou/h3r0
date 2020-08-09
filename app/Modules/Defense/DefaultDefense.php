@@ -7,19 +7,14 @@ use Hero\Game\WarriorStats;
 
 class DefaultDefense implements DefensiveSkill
 {
-	public function use(WarriorStats $warriorStats, int $attack): WarriorStats
+	public function use(WarriorStats $warriorStats, int $attack)
 	{
-		$damage = min($warriorStats->getHealth(), 0);
 		// todo: perhaps throw event for damage received
-		$newHealth = $warriorStats->getHealth() - $damage;
 		// todo: treat 0 health event
-
-		return new WarriorStats(
-			$newHealth,
-			$warriorStats->getStrength() + 0,
-			$warriorStats->getDefense() + 0,
-			$warriorStats->getSpeed() + 0,
-			clone $warriorStats->getLuck()
+		// todo: treat luck interaction
+		return min(
+			$attack - $warriorStats->getDefense(),
+			$warriorStats->getHealth()
 		);
 	}
 }

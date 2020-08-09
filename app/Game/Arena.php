@@ -23,21 +23,16 @@ class Arena
 
 	public function fight(Warrior $warriorA, Warrior $warriorB)
 	{
+		// todo: should return winner
 		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
-
-		// todo: determine of this should be here. Smells temporal coupling
-		//$this->armWarriors($firstWarrior, $secondWarrior);
-
 		$fight = $this->fightFactory->newFight($firstWarrior, $secondWarrior);
 
-		foreach ($fight->rounds() as $round) {
-			echo $round;
+		$roundsGenerator = $fight->rounds();
+
+		foreach ($roundsGenerator as $round) {
+			// echo $round;
+			//
 		}
 	}
 
-//	private function armWarriors(Warrior $firstWarrior, Warrior $secondWarrior)
-//	{
-//		$firstWarrior->setTarget($secondWarrior);
-//		$secondWarrior->setTarget($firstWarrior);
-//	}
 }

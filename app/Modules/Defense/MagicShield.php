@@ -17,8 +17,8 @@ class MagicShield implements DefensiveSkill
 	{
 	}
 
-	public function use(WarriorStats $warriorStats, int $attack): WarriorStats
+	public function use(WarriorStats $warriorStats, int $attack): ?int
 	{
-		return $warriorStats;
+		return 0;
 	}
 }

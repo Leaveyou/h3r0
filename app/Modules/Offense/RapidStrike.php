@@ -4,12 +4,19 @@ namespace Hero\Modules\Offense;
 
 use Hero\Game\Defender;
 use Hero\Game\OffensiveSkill;
+use Hero\Game\WarriorStats;
 
 class RapidStrike implements OffensiveSkill
 {
-	public function use(Defender $target, int $strength)
+	public function use(Defender $target, WarriorStats $warriorStats): bool
 	{
-		$target->defend($strength);
-		$target->defend($strength);
+		return
+			!$target->defend($warriorStats->getStrength()) &&
+			!$target->defend($warriorStats->getStrength());
+	}
+
+	public function getName(): string
+	{
+		return "Rapid Strike";
 	}
 }

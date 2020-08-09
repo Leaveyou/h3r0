@@ -5,10 +5,14 @@ namespace Hero\Game;
 use Hero\Tools\Chance;
 use InvalidArgumentException;
 
-class Warrior implements Defender
+class Warrior implements Defender, WarriorStats
 {
+	private int $health;
+	private int $strength;
+	private int $defense;
+	private int $speed;
+	private Chance $luck;
 	private string $name;
-	private WarriorStats $warriorStats;
 
 	/** @var WarriorOffensiveSkill[] */
 	private array $offensiveSkills = [];
@@ -28,8 +32,16 @@ class Warrior implements Defender
 	public function __construct(string $name, int $health, int $strength, int $defense, int $speed, Chance $luck)
 	{
 		$this->name = $this->validateName($name);
-		$this->warriorStats = new WarriorStats($health, $strength, $defense, $speed, $luck);
-	}
+		if ($health   < 0 || $health   > 9000) throw new InvalidArgumentException("Warrior's health must be between [0, 9000]!");
+		if ($strength < 0 || $strength > 9000) throw new InvalidArgumentException("Warrior's strength must be between [0, 9000]!");
+		if ($defense  < 0 || $defense  > 9000) throw new InvalidArgumentException("Warrior's defense must be between [0, 9000]!");
+		if ($speed    < 0 || $speed    > 9000) throw new InvalidArgumentException("Warrior's speed must be between [0, 9000]!");
+
+		$this->health = $health;
+		$this->strength = $strength;
+		$this->defense = $defense;
+		$this->speed = $speed;
+		$this->luck = $luck;	}
 
 	/**
 	 * @param OffensiveSkill $offensiveSkill
@@ -37,7 +49,7 @@ class Warrior implements Defender
 	 */
 	public function addOffensiveSkill(OffensiveSkill $offensiveSkill, Chance $chance): void
 	{
-		$this->offensiveSkills[] = new WarriorOffensiveSkill($offensiveSkill, $this->warriorStats, $chance);
+		$this->offensiveSkills[] = new WarriorOffensiveSkill($offensiveSkill, $this, $chance);
 	}
 
 	/**
@@ -46,7 +58,7 @@ class Warrior implements Defender
 	 */
 	public function addDefensiveSkill(DefensiveSkill $defensiveSkill, Chance $chance): void
 	{
-		$this->defensiveSkills[] = new WarriorDefensiveSkill($defensiveSkill, $this->warriorStats, $chance);
+		$this->defensiveSkills[] = new WarriorDefensiveSkill($defensiveSkill, $this, $chance);
 	}
 
 	/**
@@ -56,17 +68,44 @@ class Warrior implements Defender
 	{
 		return $this->name;
 	}
+	public function getHealth(): int
+	{
+		return $this->health;
+	}
+
+	public function getStrength(): int
+	{
+		return $this->strength;
+	}
+
+	public function getDefense(): int
+	{
+		return $this->defense;
+	}
+
+	public function getSpeed(): int
+	{
+		return $this->speed;
+	}
+
+	public function getLuck(): Chance
+	{
+		return $this->luck;
+	}
 
 	/**
 	 * Attack target warrior.
 	 * @param Defender $target Target of the attack
-	 * @return bool Whether attack was successful
+	 * @return bool
 	 */
 	public function attack(Defender $target): bool
 	{
 		foreach ($this->offensiveSkills as $offensiveSkill) {
-			if ($offensiveSkill->try($target)) {
-				return true;
+			$kill = $offensiveSkill->try($target);
+			if (!is_null($kill)) {
+				echo $this->getName() . " uses " . $offensiveSkill->getName() . " on " . $target->getName() . PHP_EOL;
+
+				return $kill;
 			}
 		}
 		return false;
@@ -75,14 +114,14 @@ class Warrior implements Defender
 	/**
 	 * Handle incoming attack of set damage
 	 * @param int $attack Requested attack
+	 * @return bool
 	 */
-	public function defend(int $attack)
+	public function defend(int $attack): bool
 	{
-		foreach ($this->defensiveSkills as $defensiveSkill) {
-			if ($defensiveSkill->try($attack)) {
-				break;
-			}
-		}
+		$damageTaken = $this->getDamage($attack);
+		$this->health -= $damageTaken;
+
+		return ($this->health > 0);
 	}
 
 	/**
@@ -97,12 +136,20 @@ class Warrior implements Defender
 		return $name;
 	}
 
-	public function getSpeed()
+	/**
+	 * @param int $attack
+	 * @return int
+	 */
+	private function getDamage(int $attack): int
 	{
-		return $this->warriorStats->getSpeed();
-	}
-	public function getLuck()
-	{
-		return $this->warriorStats->getLuck();
+		// todo: refactor into defensive skill stack class
+		foreach ($this->defensiveSkills as $defensiveSkill) {
+			$damageTaken = $defensiveSkill->try($attack);
+			if (!is_null($damageTaken)) {
+				return $damageTaken;
+
+			}
+		}
+		return $attack;
 	}
 }

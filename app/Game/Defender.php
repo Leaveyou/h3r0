@@ -6,5 +6,11 @@ namespace Hero\Game;
 
 interface Defender
 {
-	public function defend(int $attack);
+	/**
+	 *
+	 * @param int $attack
+	 * @return bool Whether warrior survived
+	 */
+	public function defend(int $attack): bool;
+	public function getName(): string;
 }

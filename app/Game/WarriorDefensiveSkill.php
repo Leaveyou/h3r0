@@ -23,11 +23,11 @@ class WarriorDefensiveSkill
 		$this->warriorStats = $warriorStats;
 	}
 
-	public function try(int $attack)
+	public function try(int $attack): ?int
 	{
 		if (!$this->chance->roll()) {
-			return false;
+			return null;
 		}
-		$this->warriorStats = $this->defensiveSkill->use($this->warriorStats, $attack);
+		return $this->defensiveSkill->use($this->warriorStats, $attack);
 	}
 }

@@ -32,6 +32,6 @@ $warriorSorter->registerFunction(new LuckSorter());
 
 $arena = new Arena($warriorSorter, new FightFactory());
 
-$arena->fight($orderus, $balaurus);
+$winner = $arena->fight($orderus, $balaurus);
 
 

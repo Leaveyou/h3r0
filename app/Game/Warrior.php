@@ -2,6 +2,8 @@
 
 namespace Hero\Game;
 
+use Hero\Game\Skills\DefensiveSkill;
+use Hero\Game\Skills\OffensiveSkill;
 use Hero\Tools\Chance;
 use InvalidArgumentException;
 

@@ -3,13 +3,13 @@
 use Hero\Demo\WarriorBuilder;
 use Hero\Game\Arena;
 use Hero\Game\Monitor;
+use Hero\Game\Skills\Defense\DefaultDefense;
+use Hero\Game\Skills\Defense\MagicShield;
+use Hero\Game\Skills\Offense\DefaultStrike;
+use Hero\Game\Skills\Offense\RapidStrike;
 use Hero\Game\WarriorSorter;
-use Hero\Modules\Defense\DefaultDefense;
-use Hero\Modules\Defense\MagicShield;
-use Hero\Modules\Offense\DefaultStrike;
-use Hero\Modules\Offense\RapidStrike;
-use Hero\Modules\WarriorSortRules\Luck as LuckSorter;
-use Hero\Modules\WarriorSortRules\Speed as SpeedSorter;
+use Hero\Game\WarriorSortRules\Luck as LuckSorter;
+use Hero\Game\WarriorSortRules\Speed as SpeedSorter;
 use Hero\Tools\Chance;
 use Hero\Tools\ConsoleColors as Color;
 

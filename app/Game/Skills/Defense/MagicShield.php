@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Hero\Modules\Defense;
+namespace Hero\Game\Skills\Defense;
 
-use Hero\Game\DefensiveSkill;
-use Hero\Game\SkillChance;
+use Hero\Game\Skills\DefensiveSkill;
+use Hero\Game\Skills\SkillChance;
 use Hero\Game\WarriorStats;
 
 class MagicShield extends SkillChance implements DefensiveSkill

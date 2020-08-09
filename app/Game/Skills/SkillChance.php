@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Hero\Game;
+namespace Hero\Game\Skills;
 
+use Hero\Game\Monitor;
 use Hero\Tools\Chance;
 
 abstract class SkillChance

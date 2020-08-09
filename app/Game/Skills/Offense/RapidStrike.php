@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Hero\Modules\Offense;
+namespace Hero\Game\Skills\Offense;
 
 use Hero\Game\Defender;
-use Hero\Game\OffensiveSkill;
-use Hero\Game\SkillChance;
+use Hero\Game\Skills\OffensiveSkill;
+use Hero\Game\Skills\SkillChance;
 use Hero\Game\WarriorStats;
 
 class RapidStrike extends SkillChance implements OffensiveSkill

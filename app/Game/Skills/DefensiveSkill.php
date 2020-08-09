@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Hero\Game;
+namespace Hero\Game\Skills;
 
-use Hero\Tools\Chance;
+use Hero\Game\WarriorStats;
 
 interface DefensiveSkill
 {
-	public function __construct(Chance $chance);
 	public function use(WarriorStats $warriorStats, int $attack): ?int;
 }

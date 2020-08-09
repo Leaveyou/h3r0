@@ -4,6 +4,7 @@
 namespace Hero\Demo;
 
 
+use BadMethodCallException;
 use Hero\Game\Warrior;
 use Hero\Tools\Chance;
 
@@ -151,15 +152,15 @@ class WarriorBuilder
 
 	private function validate()
 	{
-		if (is_null($this->minimumHealth)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumHealth\" to be set.");
-		if (is_null($this->maximumHealth)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumHealth\" to be set.");
-		if (is_null($this->minimumStrength)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumStrength\" to be set.");
-		if (is_null($this->maximumStrength)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumStrength\" to be set.");
-		if (is_null($this->minimumDefense)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumDefense\" to be set.");
-		if (is_null($this->maximumDefense)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumDefense\" to be set.");
-		if (is_null($this->minimumLuck)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumLuck\" to be set.");
-		if (is_null($this->maximumLuck)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumLuck\" to be set.");
-		if (is_null($this->minimumSpeed)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumSpeed\" to be set.");
-		if (is_null($this->maximumSpeed)) throw new \BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumSpeed\" to be set.");
+		if (is_null($this->minimumHealth)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumHealth\" to be set.");
+		if (is_null($this->maximumHealth)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumHealth\" to be set.");
+		if (is_null($this->minimumStrength)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumStrength\" to be set.");
+		if (is_null($this->maximumStrength)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumStrength\" to be set.");
+		if (is_null($this->minimumDefense)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumDefense\" to be set.");
+		if (is_null($this->maximumDefense)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumDefense\" to be set.");
+		if (is_null($this->minimumLuck)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumLuck\" to be set.");
+		if (is_null($this->maximumLuck)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumLuck\" to be set.");
+		if (is_null($this->minimumSpeed)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"minimumSpeed\" to be set.");
+		if (is_null($this->maximumSpeed)) throw new BadMethodCallException("Class " . __CLASS__ . " requires parameter \"maximumSpeed\" to be set.");
 	}
 }

@@ -2,7 +2,7 @@
 
 use Hero\Demo\WarriorBuilder;
 use Hero\Game\Arena;
-use Hero\Game\FightFactory;
+use Hero\Game\Monitor;
 use Hero\Game\WarriorSorter;
 use Hero\Modules\Defense\DefaultDefense;
 use Hero\Modules\Defense\MagicShield;
@@ -15,7 +15,7 @@ use Hero\Tools\ConsoleColors as Color;
 
 $autoloader = require("vendor/autoload.php");
 
-// todo: monolog debug messages
+$monitor = new Monitor();
 
 $warriorBuilder = new WarriorBuilder();
 
@@ -32,11 +32,16 @@ $orderus = $warriorBuilder
 	->setMaximumSpeed(50)
 	->build(Color::green("Orderus"));
 
-$orderus->addOffensiveSkill(new RapidStrike(new Chance(12)));
-$orderus->addOffensiveSkill(new DefaultStrike(new Chance(100)));
+$rapidStrike = new RapidStrike(new Chance(12));
+$defaultStrike = new DefaultStrike(new Chance(100));
+$defaultDefense = new DefaultDefense(new Chance(100));
+$magicShield = new MagicShield(new Chance(15));
 
-$orderus->addDefensiveSkill(new MagicShield(new Chance(15)));
-$orderus->addDefensiveSkill(new DefaultDefense(new Chance(100)));
+$orderus->addOffensiveSkill($rapidStrike->setMonitor($monitor));
+$orderus->addOffensiveSkill($defaultStrike->setMonitor($monitor));
+
+$orderus->addDefensiveSkill($magicShield->setMonitor($monitor));
+$orderus->addDefensiveSkill($defaultDefense->setMonitor($monitor));
 
 $balaurus = $warriorBuilder
 	->setMinimumHealth(60)
@@ -51,14 +56,14 @@ $balaurus = $warriorBuilder
 	->setMaximumSpeed(60)
 	->build(Color::cyan("Balaurus"));
 
-$balaurus->addOffensiveSkill(new DefaultStrike(new Chance(100)));
-$balaurus->addDefensiveSkill(new DefaultDefense(new Chance(100)));
+$balaurus->addOffensiveSkill($defaultStrike->setMonitor($monitor));
+$balaurus->addDefensiveSkill($defaultDefense->setMonitor($monitor));
 
 $warriorSorter = new WarriorSorter();
 $warriorSorter->registerFunction(new SpeedSorter());
 $warriorSorter->registerFunction(new LuckSorter());
 
-$arena = new Arena($warriorSorter, new FightFactory());
+$arena = new Arena($warriorSorter, new Monitor());
 $arena->fight($orderus, $balaurus);
 
 // todo: determine ties

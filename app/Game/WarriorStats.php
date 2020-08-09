@@ -3,9 +3,7 @@
 
 namespace Hero\Game;
 
-
 use Hero\Tools\Chance;
-use InvalidArgumentException;
 
 interface WarriorStats
 {

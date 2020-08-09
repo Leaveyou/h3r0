@@ -41,7 +41,8 @@ class Warrior implements Defender, WarriorStats
 		$this->strength = $strength;
 		$this->defense = $defense;
 		$this->speed = $speed;
-		$this->luck = $luck;	}
+		$this->luck = $luck;
+	}
 
 	/**
 	 * @param OffensiveSkill $offensiveSkill
@@ -101,8 +102,6 @@ class Warrior implements Defender, WarriorStats
 		if ($offensiveSkill = $this->getOffensiveSkill()) {
 			return $offensiveSkill->use($target, $this);
 		}
-
-		echo $this->getName() . " couldn't use any skills " . PHP_EOL;
 		return false;
 	}
 
@@ -142,7 +141,6 @@ class Warrior implements Defender, WarriorStats
 			$damageTaken = $defensiveSkill->use($this, $attack);
 			if (!is_null($damageTaken)) {
 				return $damageTaken;
-
 			}
 		}
 		return $attack;

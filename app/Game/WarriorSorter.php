@@ -13,7 +13,6 @@ class WarriorSorter
 		foreach ($this->sortFunctions as $function) {
 			$order = $function->establishOrder($warriorA, $warriorB);
 			if ($order) {
-				echo "{$order[0]->getName()} goes first" . PHP_EOL;
 				return $order;
 			}
 		}

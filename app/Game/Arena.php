@@ -2,43 +2,80 @@
 
 namespace Hero\Game;
 
-use Hero\Tools\ConsoleColors as Color;
+use Generator;
 
 class Arena
 {
+	const NUMBER_OF_ROUNDS = 20;
+
 	private WarriorSorter $warriorOrderRules;
-	/**
-	 * @var FightFactory
-	 */
-	private FightFactory $fightFactory;
+	private Monitor $monitor;
 
 	/**
 	 * Arena constructor.
 	 * @param WarriorSorter $warriorOrderRules
-	 * @param FightFactory $fightFactory
+	 * @param Monitor $monitor
 	 */
-	public function __construct(WarriorSorter $warriorOrderRules, FightFactory $fightFactory)
+	public function __construct(WarriorSorter $warriorOrderRules, Monitor $monitor)
 	{
 		$this->warriorOrderRules = $warriorOrderRules;
-		$this->fightFactory = $fightFactory;
+		$this->monitor = $monitor;
 	}
 
+	/**
+	 * Simulate fight between two warriors
+	 * @param Warrior $warriorA
+	 * @param Warrior $warriorB
+	 * @return Warrior|null
+	 */
 	public function fight(Warrior $warriorA, Warrior $warriorB): ?Warrior
 	{
-		// todo: register listeners for events
-		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
-		$fight = $this->fightFactory->newFight($warriorA, $warriorB);
-		foreach ($fight->getAttacks() as $attack) {
+		foreach ($this->getAttacks($warriorA, $warriorB) as $attack) {
 			$attacker = $attack->getAttacker();
 			$defender = $attack->getDefender();
 
 			if ($defender->getHealth() === 0) {
-				echo PHP_EOL . Color::red("Winner is ") . $attacker->getName() . Color::red(" with {$attacker->getHealth()} health remaining") . PHP_EOL . PHP_EOL;
+				$this->monitor->showWinner($attacker->getName(), $attacker->getHealth());
 				return $attacker;
 			}
 		}
-
-		echo Color::red("Fight ends in a tie after " . Fight::NUMBER_OF_ROUNDS . " rounds.") . PHP_EOL;
+		$this->monitor->showTie(self::NUMBER_OF_ROUNDS);
 		return null;
+	}
+
+	/**
+	 * @param Warrior $warriorA
+	 * @param Warrior $warriorB
+	 * @return Generator|AttackSummary[]
+	 */
+	public function getAttacks(Warrior $warriorA, Warrior $warriorB): Generator
+	{
+		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
+		$this->monitor->showFirst($firstWarrior->getName());
+		for ($round = 1; $round <= self::NUMBER_OF_ROUNDS; $round++) {
+			$this->monitor->roundStart(
+				$round,
+				$firstWarrior->getName(),
+				$firstWarrior->getHealth(),
+				$secondWarrior->getName(),
+				$secondWarrior->getHealth()
+			);
+
+			foreach ($this->getPairCombinations($firstWarrior, $secondWarrior) as list("attacker" => $attacker, "defender" => $defender)) {
+				$attacker->attack($defender);
+				yield new AttackSummary($attacker, $defender);
+			}
+		}
+	}
+
+	/**
+	 * @param Warrior $firstWarrior
+	 * @param Warrior $secondWarrior
+	 * @return Generator|Warrior[][]
+	 */
+	private function getPairCombinations(Warrior $firstWarrior, Warrior $secondWarrior): Generator
+	{
+		yield ["attacker" => $firstWarrior, "defender" => $secondWarrior];
+		yield ["attacker" => $secondWarrior, "defender" => $firstWarrior];
 	}
 }

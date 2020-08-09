@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 
-
 namespace Hero\Modules\WarriorSortRules;
-
 
 use Hero\Game\SortFunction;
 use Hero\Game\Warrior;

@@ -1,11 +1,13 @@
 <?php declare(strict_types=1);
 
-
 namespace Hero\Tools;
-
 
 use InvalidArgumentException;
 
+/**
+ * Class Chance - Wrapper for chance events.
+ * @package Hero\Tools
+ */
 class Chance
 {
 	private int $percent;

@@ -3,18 +3,15 @@
 namespace Hero\Modules\Defense;
 
 use Hero\Game\DefensiveSkill;
-use Hero\Game\DefensiveSkillChance;
+use Hero\Game\SkillChance;
 use Hero\Game\WarriorStats;
-use Hero\Tools\Chance;
-use Hero\Tools\ConsoleColors as Color;
 
-class MagicShield extends DefensiveSkillChance
+class MagicShield extends SkillChance implements DefensiveSkill
 {
-
 	public function use(WarriorStats $warriorStats, int $attack): ?int
 	{
 		if (parent::roll()) {
-			echo "{$warriorStats->getName()} uses " . Color::blue("Magic Shield") . " and takes no damage." . PHP_EOL;
+			$this->monitor("{$warriorStats->getName()} uses Magic Shield® and takes no damage.");
 			return 0;
 		}
 		return null;

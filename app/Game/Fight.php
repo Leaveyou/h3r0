@@ -22,22 +22,24 @@ class Fight
 	}
 
 	/**
-	 * @return Generator
+	 * @return Generator|AttackSummary[]
 	 */
-	public function rounds(): Generator
+	public function getAttacks(): Generator
 	{
-		// todo: refactor to only ever generate a round at a time. and combine with order generator
-		for( $round = 1; $round <= self::NUMBER_OF_ROUNDS; $round++) {
-
-			$kill = $this->firstWarrior->attack($this->secondWarrior);
-			echo $this->secondWarrior->getName() . "'s health dropped to " . $this->secondWarrior->getHealth() . PHP_EOL;
-			yield $kill;
-			if ($kill) break;
-
-			$kill = $this->secondWarrior->attack($this->firstWarrior);
-			echo $this->firstWarrior->getName() . "'s health dropped to " . $this->firstWarrior->getHealth() . PHP_EOL;
-			yield $kill;
-			if ($kill) break;
+		for ($round = 1; $round <= self::NUMBER_OF_ROUNDS; $round++) {
+			foreach ($this->getPairCombinations() as list("attacker" => $attacker, "defender" => $defender)) {
+				$attacker->attack($defender);
+				yield new AttackSummary($attacker, $defender);
+			}
 		}
+	}
+
+	/**
+	 * @return Generator|Warrior[][]
+	 */
+	private function getPairCombinations(): Generator
+	{
+		yield ["attacker" => $this->firstWarrior, "defender" => $this->secondWarrior];
+		yield ["attacker" => $this->secondWarrior, "defender" => $this->firstWarrior];
 	}
 }

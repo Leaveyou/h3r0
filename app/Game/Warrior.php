@@ -14,10 +14,10 @@ class Warrior implements Defender, WarriorStats
 	private Chance $luck;
 	private string $name;
 
-	/** @var WarriorOffensiveSkill[] */
+	/** @var OffensiveSkill[] */
 	private array $offensiveSkills = [];
 
-	/** @var WarriorDefensiveSkill[] */
+	/** @var DefensiveSkill[] */
 	private array $defensiveSkills = [];
 
 	/**
@@ -45,20 +45,18 @@ class Warrior implements Defender, WarriorStats
 
 	/**
 	 * @param OffensiveSkill $offensiveSkill
-	 * @param Chance $chance
 	 */
-	public function addOffensiveSkill(OffensiveSkill $offensiveSkill, Chance $chance): void
+	public function addOffensiveSkill(OffensiveSkill $offensiveSkill): void
 	{
-		$this->offensiveSkills[] = new WarriorOffensiveSkill($offensiveSkill, $this, $chance);
+		$this->offensiveSkills[] = $offensiveSkill;
 	}
 
 	/**
 	 * @param DefensiveSkill $defensiveSkill
-	 * @param Chance $chance
 	 */
-	public function addDefensiveSkill(DefensiveSkill $defensiveSkill, Chance $chance): void
+	public function addDefensiveSkill(DefensiveSkill $defensiveSkill): void
 	{
-		$this->defensiveSkills[] = new WarriorDefensiveSkill($defensiveSkill, $this, $chance);
+		$this->defensiveSkills[] = $defensiveSkill;
 	}
 
 	/**
@@ -101,11 +99,9 @@ class Warrior implements Defender, WarriorStats
 	public function attack(Defender $target): bool
 	{
 		foreach ($this->offensiveSkills as $offensiveSkill) {
-			$kill = $offensiveSkill->try($target);
-			if (!is_null($kill)) {
+			if ($offensiveSkill->use($target, $this->strength)) {
 				echo $this->getName() . " uses " . $offensiveSkill->getName() . " on " . $target->getName() . PHP_EOL;
-
-				return $kill;
+				return false;
 			}
 		}
 		return false;
@@ -119,6 +115,7 @@ class Warrior implements Defender, WarriorStats
 	public function defend(int $attack): bool
 	{
 		$damageTaken = $this->getDamage($attack);
+		echo "damage " . $damageTaken . PHP_EOL;
 		$this->health -= $damageTaken;
 
 		return ($this->health > 0);
@@ -144,7 +141,7 @@ class Warrior implements Defender, WarriorStats
 	{
 		// todo: refactor into defensive skill stack class
 		foreach ($this->defensiveSkills as $defensiveSkill) {
-			$damageTaken = $defensiveSkill->try($attack);
+			$damageTaken = $defensiveSkill->use($this, $attack);
 			if (!is_null($damageTaken)) {
 				return $damageTaken;
 

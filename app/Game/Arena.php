@@ -21,18 +21,19 @@ class Arena
 		$this->fightFactory = $fightFactory;
 	}
 
-	public function fight(Warrior $warriorA, Warrior $warriorB)
+	public function fight(Warrior $warriorA, Warrior $warriorB): ?Warrior
 	{
-		// todo: should return winner
+		// todo: register listeners for events
 		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
 		$fight = $this->fightFactory->newFight($firstWarrior, $secondWarrior);
+		foreach ($fight->getAttacks() as $attack) {
+			$attacker = $attack->getAttacker();
+			$defender = $attack->getDefender();
 
-		$roundsGenerator = $fight->rounds();
-
-		foreach ($roundsGenerator as $round) {
-			// echo $round;
-			//
+			if ($defender->getHealth() === 0) {
+				return $attacker;
+			}
 		}
+		return null;
 	}
-
 }

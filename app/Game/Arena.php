@@ -2,6 +2,8 @@
 
 namespace Hero\Game;
 
+use Hero\Tools\ConsoleColors as Color;
+
 class Arena
 {
 	private WarriorSorter $warriorOrderRules;
@@ -31,9 +33,12 @@ class Arena
 			$defender = $attack->getDefender();
 
 			if ($defender->getHealth() === 0) {
+				echo PHP_EOL . Color::red("Winner is ") . $attacker->getName() . Color::red(" with {$attacker->getHealth()} health remaining") . PHP_EOL . PHP_EOL;
 				return $attacker;
 			}
 		}
+
+		echo Color::red("Fight ends in a tie after " . Fight::NUMBER_OF_ROUNDS . " rounds.") . PHP_EOL;
 		return null;
 	}
 }

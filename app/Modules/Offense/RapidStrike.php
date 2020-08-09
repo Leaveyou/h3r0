@@ -6,6 +6,7 @@ use Hero\Game\Defender;
 use Hero\Game\OffensiveSkill;
 use Hero\Game\WarriorStats;
 use Hero\Tools\Chance;
+use Hero\Tools\ConsoleColors;
 
 class RapidStrike implements OffensiveSkill
 {
@@ -23,12 +24,11 @@ class RapidStrike implements OffensiveSkill
 		$this->chance = $chance;
 	}
 
-	public function use(Defender $target, int $strength): bool
+	public function use(Defender $target, WarriorStats $warriorStats): bool
 	{
-		if (!$this->chance->roll()) return false;
-
-		$target->defend($strength);
-		$target->defend($strength);
+		echo "{$warriorStats->getName()} uses " . ConsoleColors::magenta("Rapid Strike") . " on {$target->getName()}" . PHP_EOL;
+		$target->defend($warriorStats->getStrength());
+		$target->defend($warriorStats->getStrength());
 
 		return true;
 	}
@@ -36,5 +36,10 @@ class RapidStrike implements OffensiveSkill
 	public function getName(): string
 	{
 		return "Rapid Strike";
+	}
+
+	public function roll()
+	{
+		return $this->chance->roll();
 	}
 }

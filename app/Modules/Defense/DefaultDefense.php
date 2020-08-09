@@ -5,6 +5,7 @@ namespace Hero\Modules\Defense;
 use Hero\Game\DefensiveSkill;
 use Hero\Game\WarriorStats;
 use Hero\Tools\Chance;
+use Hero\Tools\ConsoleColors;
 
 class DefaultDefense implements DefensiveSkill
 {
@@ -23,23 +24,24 @@ class DefaultDefense implements DefensiveSkill
 	/**
 	 * @param WarriorStats $warriorStats
 	 * @param int $attack
-	 * @return int damage taken
+	 * @return int|null Damage taken
 	 */
-	public function use(WarriorStats $warriorStats, int $attack): int
+	public function use(WarriorStats $warriorStats, int $attack): ?int
 	{
 		// todo: perhaps throw event for damage received
-		// todo: treat 0 health event
-		// todo: treat luck interaction
-		return min(
+
+		if ($warriorStats->getLuck()->roll()) {
+			echo "{$warriorStats->getName()} gets lucky and takes no damage." . PHP_EOL;
+			return 0;
+		}
+
+		$damage = min(
 			$attack - $warriorStats->getDefense(),
 			$warriorStats->getHealth()
 		);
-	}
 
+		echo "{$warriorStats->getName()} gets hit for " . ConsoleColors::red((string)$damage) . " damage." . PHP_EOL;
 
-
-	public function getName(): string
-	{
-		return "default defense";
+		return $damage;
 	}
 }

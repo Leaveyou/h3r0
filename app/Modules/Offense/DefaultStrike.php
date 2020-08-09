@@ -14,18 +14,15 @@ class DefaultStrike implements OffensiveSkill
 	 */
 	private Chance $chance;
 
-
 	public function __construct(Chance $chance)
 	{
 		$this->chance = $chance;
 	}
 
-	public function use(Defender $target, int $strength): bool
+	public function use(Defender $target, WarriorStats $warriorStats): bool
 	{
-		if (!$this->chance->roll()) return false;
-
-		// todo: perhaps create "Attack object" or strength
-		$target->defend($strength);
+		echo "{$warriorStats->getName()} attacks {$target->getName()}" . PHP_EOL;
+		$target->defend($warriorStats->getStrength());
 		return true;
 	}
 
@@ -34,4 +31,8 @@ class DefaultStrike implements OffensiveSkill
 		return "basic attack";
 	}
 
+	public function roll()
+	{
+		return $this->chance->roll();
+	}
 }

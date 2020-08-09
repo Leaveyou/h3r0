@@ -9,6 +9,7 @@ use InvalidArgumentException;
 
 interface WarriorStats
 {
+	public function getName(): string;
 	public function getHealth(): int;
 	public function getStrength(): int;
 	public function getDefense(): int;

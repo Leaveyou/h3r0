@@ -7,6 +7,8 @@ use Hero\Tools\Chance;
 interface OffensiveSkill
 {
 	public function __construct(Chance $chance);
-	public function use(Defender $target, int $strength): bool;
+	public function use(Defender $target, WarriorStats $warriorStats): bool;
 	public function getName(): string;
+
+	public function roll();
 }

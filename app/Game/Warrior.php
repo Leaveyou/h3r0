@@ -94,16 +94,15 @@ class Warrior implements Defender, WarriorStats
 	/**
 	 * Attack target warrior.
 	 * @param Defender $target Target of the attack
-	 * @return bool
+	 * @return bool Whether a skill was used
 	 */
 	public function attack(Defender $target): bool
 	{
-		foreach ($this->offensiveSkills as $offensiveSkill) {
-			if ($offensiveSkill->use($target, $this->strength)) {
-				echo $this->getName() . " uses " . $offensiveSkill->getName() . " on " . $target->getName() . PHP_EOL;
-				return false;
-			}
+		if ($offensiveSkill = $this->getOffensiveSkill()) {
+			return $offensiveSkill->use($target, $this);
 		}
+
+		echo $this->getName() . " couldn't use any skills " . PHP_EOL;
 		return false;
 	}
 
@@ -115,7 +114,6 @@ class Warrior implements Defender, WarriorStats
 	public function defend(int $attack): bool
 	{
 		$damageTaken = $this->getDamage($attack);
-		echo "damage " . $damageTaken . PHP_EOL;
 		$this->health -= $damageTaken;
 
 		return ($this->health > 0);
@@ -148,5 +146,18 @@ class Warrior implements Defender, WarriorStats
 			}
 		}
 		return $attack;
+	}
+
+	/**
+	 * @return ?OffensiveSkill
+	 */
+	private function getOffensiveSkill(): ?OffensiveSkill
+	{
+		foreach ($this->offensiveSkills as $offensiveSkill) {
+			if ($offensiveSkill->roll()) {
+				return $offensiveSkill;
+			}
+		}
+		return null;
 	}
 }

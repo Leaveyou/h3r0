@@ -21,7 +21,8 @@ class Chance
 	}
 
 	public function roll(): bool {
-		return (rand(0,99) < $this->percent);
+		$roll = rand(0,99);
+		return ($roll < $this->percent);
 	}
 
 	/**

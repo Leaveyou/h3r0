@@ -3,6 +3,7 @@
 namespace Hero\Game;
 
 use Generator;
+use Hero\Tools\ConsoleColors;
 
 class Fight
 {
@@ -27,6 +28,7 @@ class Fight
 	public function getAttacks(): Generator
 	{
 		for ($round = 1; $round <= self::NUMBER_OF_ROUNDS; $round++) {
+			echo PHP_EOL . ConsoleColors::red("# Round {$round}:") . PHP_EOL;
 			foreach ($this->getPairCombinations() as list("attacker" => $attacker, "defender" => $defender)) {
 				$attacker->attack($defender);
 				yield new AttackSummary($attacker, $defender);

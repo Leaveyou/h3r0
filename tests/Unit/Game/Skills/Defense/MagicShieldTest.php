@@ -38,49 +38,20 @@ class MagicShieldTest extends TestCase
 		$this->magicShield = new MagicShield($this->skillChance);
 		$this->magicShield->setMonitor($this->monitor);
 	}
-//
-//	public function testLucky()
-//	{
-//		$luck = \Mockery::mock(Chance::class);
-//		$luck->shouldReceive("roll")->withNoArgs()->andReturn(true);
-//
-//		$this->warriorStats->shouldReceive("getLuck")->once()->andReturn($luck);
-//		$this->warriorStats->shouldReceive("getName")->once()->andReturn("Gigi");
-//
-//		$this->monitor->shouldReceive("customMessage")->with("Gigi gets lucky and takes no damage.");
-//		$attack = 5;
-//		$this->magicShield->use($this->warriorStats, $attack);
-//	}
-//
-//	public function testUnlucky()
-//	{
-//		$luck = \Mockery::mock(Chance::class);
-//		$luck->shouldReceive("roll")->withNoArgs()->andReturn(false);
-//
-//		$defense = 10;
-//		$health = 70;
-//		$attack = 50;
-//
-//		$this->warriorStats->shouldReceive("getLuck")->once()->andReturn($luck);
-//		$this->warriorStats->shouldReceive("getName")->once()->andReturn("Gigi");
-//		$this->warriorStats->shouldReceive("getDefense")->once()->andReturn($defense);
-//		$this->warriorStats->shouldReceive("getHealth")->once()->andReturn($health);
-//		$this->monitor->shouldReceive("customMessage")->with("Gigi gets hit for " . ($attack - $defense) . " damage.");
-//		$this->magicShield->use($this->warriorStats, $attack);
-//	}
-//
-//	public function testVeryUnlucky()
-//	{
-//		$luck = \Mockery::mock(Chance::class);
-//		$luck->shouldReceive("roll")->withNoArgs()->andReturn(false);
-//		$defense = 10;
-//		$health = 30;
-//		$attack = 50;
-//		$this->warriorStats->shouldReceive("getLuck")->once()->andReturn($luck);
-//		$this->warriorStats->shouldReceive("getName")->once()->andReturn("Gigi");
-//		$this->warriorStats->shouldReceive("getDefense")->once()->andReturn($defense);
-//		$this->warriorStats->shouldReceive("getHealth")->once()->andReturn($health);
-//		$this->monitor->shouldReceive("customMessage")->with("Gigi gets hit for " . ($health) . " damage.");
-//		$this->magicShield->use($this->warriorStats, $attack);
-//	}
+
+	public function testLucky()
+	{
+		$this->skillChance->shouldReceive("roll")->withNoArgs()->andReturn(true);
+		$this->warriorStats->shouldReceive("getName")->once()->andReturn("Gigi");
+		$this->monitor->shouldReceive("customMessage")->with("Gigi uses Magic Shield® and takes no damage.");
+		$return = $this->magicShield->use($this->warriorStats, 5);
+		$this->assertSame(0, $return, "Warrior should not receive any damage when using Magic Shield");
+	}
+
+	public function testUnLucky()
+	{
+		$this->skillChance->shouldReceive("roll")->withNoArgs()->andReturn(false);
+		$return = $this->magicShield->use($this->warriorStats, 123);
+		$this->assertSame(null, $return, "Skill should not have triggered");
+	}
 }

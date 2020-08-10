@@ -5,24 +5,26 @@ namespace Hero\Tools;
 use BadMethodCallException;
 
 /**
- * @method static red(string $text): string
- * @method static green(string $text): string
- * @method static yellow(string $text): string
- * @method static blue(string $text): string
- * @method static magenta(string $text): string
- * @method static cyan(string $text): string
- * @method static gray(string $text): string
+ * @method static red     (string $text): string
+ * @method static green   (string $text): string
+ * @method static yellow  (string $text): string
+ * @method static blue    (string $text): string
+ * @method static magenta (string $text): string
+ * @method static cyan    (string $text): string
+ * @method static gray    (string $text): string
  */
 class ConsoleColors
 {
+
 	private static array $colors = [
-		"red" => 31,
-		"green" => 32,
-		"yellow" => 33,
-		"blue" => 34,
-		"magenta" => 35,
-		"cyan" => 36,
-		"gray" => 37,
+		"default" => "\e[39m",
+		"red"     => "\e[31m",
+		"green"   => "\e[32m",
+		"yellow"  => "\e[33m",
+		"blue"    => "\e[34m",
+		"magenta" => "\e[35m",
+		"cyan"    => "\e[36m",
+		"gray"    => "\e[37m",
 	];
 
 	/**
@@ -34,7 +36,9 @@ class ConsoleColors
 	{
 		list($text) = $arguments;
 		if (isset(self::$colors[$methodName])) {
-			return "\033[" . self::$colors[$methodName] . "m$text\033[39m";
+			$colorCode = self::$colors[$methodName];
+			$default = self::$colors["default"];
+			return $colorCode . $text . $default;
 		}
 		throw new BadMethodCallException("Method " . __CLASS__ . ":: $methodName() does not exist");
 	}

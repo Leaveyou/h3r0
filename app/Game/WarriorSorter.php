@@ -5,11 +5,11 @@ namespace Hero\Game;
 class WarriorSorter
 {
 	/** @var SortFunction[] */
-	private array $sortFunctions;
+	private array $sortFunctions = [];
 
 	public function sort(Warrior $warriorA, Warrior $warriorB)
 	{
-		// todo: refactor this shit
+		// todo: refactor: ugly
 		foreach ($this->sortFunctions as $function) {
 			$order = $function->establishOrder($warriorA, $warriorB);
 			if ($order) {

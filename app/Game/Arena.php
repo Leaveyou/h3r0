@@ -48,7 +48,7 @@ class Arena
 	 * @param Warrior $warriorB
 	 * @return Generator|AttackSummary[]
 	 */
-	public function getAttacks(Warrior $warriorA, Warrior $warriorB): Generator
+	private function getAttacks(Warrior $warriorA, Warrior $warriorB): Generator
 	{
 		list($firstWarrior, $secondWarrior) = $this->warriorOrderRules->sort($warriorA, $warriorB);
 		$this->monitor->showFirst($firstWarrior->getName());

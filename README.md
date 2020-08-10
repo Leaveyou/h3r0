@@ -2,9 +2,14 @@
 
 ## Running
 
+Application requires php 7.4.
+
 ~~~ 
+composer install
 php demo.php
 ~~~
+
+![Demo run](demo.png)
 
 ## Design choices
 

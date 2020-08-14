@@ -4,10 +4,10 @@ namespace Hero\Game;
 
 interface SortFunction
 {
-	/**
-	 * @param Warrior $warriorA
-	 * @param Warrior $warriorB
-	 * @return Warrior[]
-	 */
-	public function establishOrder(Warrior $warriorA, Warrior $warriorB): ?array;
+    /**
+     * @param Warrior $warriorA
+     * @param Warrior $warriorB
+     * @return Warrior[]
+     */
+    public function establishOrder(Warrior $warriorA, Warrior $warriorB): ?array;
 }

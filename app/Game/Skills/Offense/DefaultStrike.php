@@ -9,10 +9,10 @@ use Hero\Game\WarriorStats;
 
 class DefaultStrike extends SkillChance implements OffensiveSkill
 {
-	public function use(Defender $target, WarriorStats $warriorStats): bool
-	{
-		$this->monitor("{$warriorStats->getName()} attacks {$target->getName()}");
-		$target->defend($warriorStats->getStrength());
-		return true;
-	}
+    public function use(Defender $target, WarriorStats $warriorStats): bool
+    {
+        $this->monitor("{$warriorStats->getName()} attacks {$target->getName()}");
+        $target->defend($warriorStats->getStrength());
+        return true;
+    }
 }

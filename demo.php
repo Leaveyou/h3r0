@@ -20,17 +20,17 @@ $monitor = new Monitor();
 $warriorBuilder = new WarriorBuilder();
 
 $orderus = $warriorBuilder
-	->setMinimumHealth(70)
-	->setMaximumHealth(100)
-	->setMinimumStrength(70)
-	->setMaximumStrength(80)
-	->setMinimumDefense(45)
-	->setMaximumDefense(55)
-	->setMinimumLuck(10)
-	->setMaximumLuck(30)
-	->setMinimumSpeed(40)
-	->setMaximumSpeed(50)
-	->build(Color::green("Orderus"));
+    ->setMinimumHealth(70)
+    ->setMaximumHealth(100)
+    ->setMinimumStrength(70)
+    ->setMaximumStrength(80)
+    ->setMinimumDefense(45)
+    ->setMaximumDefense(55)
+    ->setMinimumLuck(10)
+    ->setMaximumLuck(30)
+    ->setMinimumSpeed(40)
+    ->setMaximumSpeed(50)
+    ->build(Color::green("Orderus"));
 
 $rapidStrike = new RapidStrike(new Chance(12));
 $defaultStrike = new DefaultStrike(new Chance(100));
@@ -44,17 +44,17 @@ $orderus->addDefensiveSkill($magicShield->setMonitor($monitor));
 $orderus->addDefensiveSkill($defaultDefense->setMonitor($monitor));
 
 $balaurus = $warriorBuilder
-	->setMinimumHealth(60)
-	->setMaximumHealth(90)
-	->setMinimumStrength(60)
-	->setMaximumStrength(90)
-	->setMinimumDefense(40)
-	->setMaximumDefense(60)
-	->setMinimumLuck(24)
-	->setMaximumLuck(40)
-	->setMinimumSpeed(40)
-	->setMaximumSpeed(60)
-	->build(Color::cyan("Balaurus"));
+    ->setMinimumHealth(60)
+    ->setMaximumHealth(90)
+    ->setMinimumStrength(60)
+    ->setMaximumStrength(90)
+    ->setMinimumDefense(40)
+    ->setMaximumDefense(60)
+    ->setMinimumLuck(24)
+    ->setMaximumLuck(40)
+    ->setMinimumSpeed(40)
+    ->setMaximumSpeed(60)
+    ->build(Color::cyan("Balaurus"));
 
 $balaurus->addOffensiveSkill($defaultStrike->setMonitor($monitor));
 $balaurus->addDefensiveSkill($defaultDefense->setMonitor($monitor));

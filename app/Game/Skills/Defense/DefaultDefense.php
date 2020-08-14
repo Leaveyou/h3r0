@@ -8,24 +8,24 @@ use Hero\Game\WarriorStats;
 
 class DefaultDefense extends SkillChance implements DefensiveSkill
 {
-	/**
-	 * @param WarriorStats $warriorStats
-	 * @param int $attack
-	 * @return int|null Damage taken
-	 */
-	public function use(WarriorStats $warriorStats, int $attack): ?int
-	{
-		if ($warriorStats->getLuck()->roll()) {
-			$this->monitor("{$warriorStats->getName()} gets lucky and takes no damage.");
-			return 0;
-		}
+    /**
+     * @param WarriorStats $warriorStats
+     * @param int $attack
+     * @return int|null Damage taken
+     */
+    public function use(WarriorStats $warriorStats, int $attack): ?int
+    {
+        if ($warriorStats->getLuck()->roll()) {
+            $this->monitor("{$warriorStats->getName()} gets lucky and takes no damage.");
+            return 0;
+        }
 
-		$damage = min(
-			$attack - $warriorStats->getDefense(),
-			$warriorStats->getHealth()
-		);
+        $damage = min(
+            $attack - $warriorStats->getDefense(),
+            $warriorStats->getHealth()
+        );
 
-		$this->monitor("{$warriorStats->getName()} gets hit for $damage damage.");
-		return $damage;
-	}
+        $this->monitor("{$warriorStats->getName()} gets hit for $damage damage.");
+        return $damage;
+    }
 }

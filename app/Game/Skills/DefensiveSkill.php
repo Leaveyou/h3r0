@@ -6,5 +6,5 @@ use Hero\Game\WarriorStats;
 
 interface DefensiveSkill
 {
-	public function use(WarriorStats $warriorStats, int $attack): ?int;
+    public function use(WarriorStats $warriorStats, int $attack): ?int;
 }
